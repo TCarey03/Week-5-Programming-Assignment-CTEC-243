@@ -1,4 +1,5 @@
-public class Artifact {
+public class Artifact implements Comparable<Artifact> {
+
     private String id;
     private String name;
     private String era;
@@ -43,5 +44,10 @@ public class Artifact {
         Artifact other = (Artifact) obj;
 
         return this.id.equals(other.id);
+    }
+
+    @Override
+    public int compareTo(Artifact other) {
+        return this.id.compareTo(other.id);
     }
 }
