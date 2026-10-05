@@ -2,7 +2,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayCollection<Artifact> catalog = new ArrayCollection<>();
+        LinkedCollection<Artifact> ledger =
+                new LinkedCollection<>();
 
         Artifact artifact1 =
                 new Artifact("A101", "Ancient Hammer", "Ancient");
@@ -13,25 +14,27 @@ public class Main {
         Artifact artifact3 =
                 new Artifact("C309", "Roman Coin", "Roman");
 
-        // Add artifacts to the collection
-        catalog.add(artifact1);
-        catalog.add(artifact2);
-        catalog.add(artifact3);
+        Artifact artifact4 =
+                new Artifact("D410", "Medieval Sword", "Medieval");
 
-        System.out.println("Initial collection size: " + catalog.size());
+        // Add artifacts
+        ledger.add(artifact1);
+        ledger.add(artifact2);
+        ledger.add(artifact3);
+        ledger.add(artifact4);
 
-        // Create a search key using only the ID
+        System.out.println("Linked collection size: "
+                + ledger.size());
+
+        // Search using an ID-only Artifact
         Artifact searchKey =
                 new Artifact("B205", "", "");
 
-        // Search for the artifact
         System.out.println("\nSearching for B205...");
 
-        if (catalog.contains(searchKey)) {
-            Artifact found = catalog.get(searchKey);
-
+        if (ledger.contains(searchKey)) {
             System.out.println("Artifact found:");
-            System.out.println(found);
+            System.out.println(ledger.get(searchKey));
         } else {
             System.out.println("Artifact not found.");
         }
@@ -39,18 +42,30 @@ public class Main {
         // Remove B205
         System.out.println("\nRemoving B205...");
 
-        catalog.remove(searchKey);
+        boolean removed = ledger.remove(searchKey);
 
+        System.out.println("Was artifact removed? " + removed);
         System.out.println("Collection size after removal: "
-                + catalog.size());
+                + ledger.size());
 
-        // Show remaining artifacts
-        System.out.println("\nRemaining artifacts:");
+        // Verify B205 is gone
+        System.out.println("\nChecking B205 again...");
 
-        Artifact keyA = new Artifact("A101", "", "");
-        Artifact keyC = new Artifact("C309", "", "");
+        if (ledger.contains(searchKey)) {
+            System.out.println("B205 is still in the collection.");
+        } else {
+            System.out.println("B205 was successfully removed.");
+        }
 
-        System.out.println(catalog.get(keyA));
-        System.out.println(catalog.get(keyC));
+        // Verify another artifact is still there
+        Artifact remainingKey =
+                new Artifact("C309", "", "");
+
+        System.out.println("\nChecking C309...");
+
+        if (ledger.contains(remainingKey)) {
+            System.out.println("C309 is still in the collection:");
+            System.out.println(ledger.get(remainingKey));
+        }
     }
 }
